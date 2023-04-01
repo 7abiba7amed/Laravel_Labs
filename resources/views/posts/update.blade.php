@@ -3,9 +3,9 @@
 @section('title') Create @endsection
 
 @section('content')
-    <form action="{{ route('posts.update',$post['id']) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <form action="{{ route('posts.update') }}" method="POST">
+        {{ csrf_field() }}
+        @method('POST')
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input  type="text" class="form-control" >
@@ -14,15 +14,14 @@
             <label  class="form-label">Description</label>
             <textarea class="form-control"  rows="3"></textarea>
         </div>
-
         <div class="mb-3">
             <label  class="form-label">Post Creator</label>
             <select class="form-control">
-                <option value="1">Ahmed</option>
-                <option value="2">Mohamed</option>
+                <option value="1">Habiba</option>
+                <option value="2">Roaa</option>
             </select>
         </div>
 
-        <button class="btn btn-success">Submit</button>
+        <button class="btn btn-success">Update</button>
     </form>
 @endsection

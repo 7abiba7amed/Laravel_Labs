@@ -37,25 +37,28 @@ class PostController extends Controller
         return view('posts.index', ['posts' => $this->allPosts]);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         return view('posts.show', ['post' => $this->allPosts[0]]);
     }
-
     public function create()
     {
         return view('posts.create');
     }
-    public function delete()
+    public function delete(int $id)
     {
-        return view('posts.index', ['posts' => $this->allPosts]);
+        return redirect()->route('posts.index');
     }
-    public function update()
+    public function edit(int $id)
     {
-        return view('posts.update', ['post' => $this->allPosts[0]]);
+        return view('posts.update');
     }
-    public function restore()
+    public function update(Request $request)
     {
-        return view('posts.index', ['posts' => $this->allPosts]);
+        return redirect()->route('posts.index');
+    }
+    public function store(Request $request)
+    {
+        return redirect()->route('posts.index');
     }
 }

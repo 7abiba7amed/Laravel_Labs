@@ -26,7 +26,7 @@
                 <td>{{$post['created_at']}}</td>
                 <td>
                     <a href="/posts/{{$post['id']}}" class="btn btn-info">View</a>
-                    <a href="/posts/update/{{$post['id']}}" class="btn btn-warning">Edit</a>
+                    <a href="/posts/edit/{{$post['id']}}" class="btn btn-warning">Edit</a>
                     <a href="/posts/delete/{{$post['id']}}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
