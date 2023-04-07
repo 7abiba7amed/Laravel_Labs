@@ -8,8 +8,9 @@
             Post Info
         </div>
         <div class="card-body">
-            <h5 class="card-title">Title: {{$post['title']}}</h5>
-            <p class="card-text">Description: {{$post['description']}}</p>
+            <h5 class="card-title">Title: {{$post->title}}</h5>
+            <p class="card-text">Description: {{$post->description}}</p>
+            <p class="card-text">Created At: {{$post->created_at->isoFormat('Do-MMMM-YYYY')}}</p>
         </div>
     </div>
 
@@ -18,9 +19,12 @@
             Post Creator Info
         </div>
         <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title">Name : {{ $user->name }}</h5>
         </div>
     </div>
+    @include('comments.index')
+    @include('comments.create')
+
 
 @endsection
+

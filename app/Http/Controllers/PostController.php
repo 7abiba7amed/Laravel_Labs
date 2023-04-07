@@ -2,63 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private $allPosts = [
-        [
-            'id' => 1,
-            'title' => 'Laravel',
-            'description' => 'hello laravel',
-            'posted_by' => 'Ahmed',
-            'created_at' => '2023-04-01 10:00:00',
-        ],
-
-        [
-            'id' => 2,
-            'title' => 'PHP',
-            'description' => 'hello php',
-            'posted_by' => 'Mohamed',
-            'created_at' => '2023-04-01 10:00:00',
-        ],
-
-        [
-            'id' => 3,
-            'title' => 'Javascript',
-            'description' => 'hello javascript',
-            'posted_by' => 'Mohamed',
-            'created_at' => '2023-04-01 10:00:00',
-        ],
-    ];
-
     public function index()
     {
-        return view('posts.index', ['posts' => $this->allPosts]);
+        $allPosts = Post::paginate(10);
+        foreach ($allPosts as $post) {
+            if ($post['user_id'])
+                $post['user_id'] = User::find($post['user_id'])['name'];
+        }
+        return view('posts.index', [
+            'posts' => $allPosts,
+        ]);
     }
 
     public function show(int $id)
     {
-        return view('posts.show', ['post' => $this->allPosts[0]]);
+        $post = Post::find($id);
+        $user = User::find($post->user_id);
+        $comments = Comment::all();
+        foreach ($comments as $comment) {
+            if ($comment['user_id'])
+                $comment['user_id'] = User::find($comment['user_id'])['name'];
+        }
+        return view('posts.show', ['post' => $post , 'user'=>$user , 'comments'=>$comments]);
     }
     public function create()
     {
-        return view('posts.create');
+        $users = User::all();
+
+        return view('posts.create', [
+            'users' => $users
+        ]);
     }
-    public function delete(int $id)
+    public function destroy(int $id)
     {
+        Post::destroy($id);
         return redirect()->route('posts.index');
     }
     public function edit(int $id)
     {
-        return view('posts.update');
+        $users = User::all();
+        $post = Post::find($id);
+        return view('posts.update', ['post' => $post, 'users' => $users]);
     }
     public function update(Request $request)
     {
+        $post = $request->all();
+        Post::where('id', $post['id'])
+            ->update([
+                'title' => $post['title'],
+                'description' => $post['description'],
+                'user_id' => $post['user_id']
+            ]);
         return redirect()->route('posts.index');
     }
     public function store(Request $request)
     {
+        Post::create($request->only('title', 'description', 'user_id'));
         return redirect()->route('posts.index');
     }
 }
