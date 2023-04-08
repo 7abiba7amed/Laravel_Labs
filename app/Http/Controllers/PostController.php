@@ -25,7 +25,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $user = User::find($post->user_id);
-        $comments = Comment::all();
+        $comments = Comment::where('commentable_id',$id)->get();
         foreach ($comments as $comment) {
             if ($comment['user_id'])
                 $comment['user_id'] = User::find($comment['user_id'])['name'];

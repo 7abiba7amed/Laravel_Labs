@@ -30,8 +30,10 @@ class CommentController extends Controller
     }
     public function destroy(int $id)
     {
+        $postID = Comment::find($id)->commentable_id;
         Comment::destroy($id);
-        return redirect('/posts/6');
+        return redirect()->route('posts.show', ['post' => $postID]);
+
     }
     public function edit(int $id)
     {
@@ -42,16 +44,19 @@ class CommentController extends Controller
     public function update(Request $request)
     {
         $comment = $request->all();
+        $postID = Comment::find($comment['id'])->commentable_id;
         Comment::where('id', $comment['id'])
             ->update([
                 'body' => $comment['body']
             ]);
-        return redirect('/posts/6');
+            return redirect()->route('posts.show', ['post' => $postID]);
     }
     public function store(Request $request)
     {
-        Comment::create($request->only('body', 'user_id'));
-        return redirect('/posts/6');
+       $post= Post::find($request->post_id);
+       $post->comments()->create($request->only('body', 'user_id'));
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
 
     }
 }
