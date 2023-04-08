@@ -11,7 +11,7 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +22,19 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            
+
+            'title' => 'required|unique:posts|min:3',
+            'description' => 'required|min:10',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Title is Required',
+            'title.min' => 'Title minimum lenght is 3',
+            'description.required' => 'Description is Required',
+            'description.min' => 'Description minimum lenght is 10',
         ];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -62,9 +62,12 @@ class PostController extends Controller
             ]);
         return redirect()->route('posts.index');
     }
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         Post::create($request->only('title', 'description', 'user_id'));
         return redirect()->route('posts.index');
     }
 }
+// <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></head>
+// <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+

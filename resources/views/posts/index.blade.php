@@ -3,9 +3,9 @@
 @section('title') Index @endsection
 
 @section('content')
-    <div class="text-center">
+    {{-- <div class="text-center">
         <a type="button" href="/posts/create" class="mt-4 btn btn-success">Create Post</a>
-    </div>
+    </div> --}}
     <table class="table mt-4">
         <thead>
         <tr>
