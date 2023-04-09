@@ -17,11 +17,12 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware(['auth']);
 
 Route::group(['middleware'=>['auth']],function(){
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit']) ->name('posts.edit');

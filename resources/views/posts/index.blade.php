@@ -11,6 +11,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
+            <th scope="col">Image</th>
+            <th scope="col">Slug</th>
             <th scope="col">Posted By</th>
             <th scope="col">Created At</th>
             <th scope="col">Actions</th>
@@ -18,30 +20,12 @@
         </thead>
         <tbody>
 
-{{-- <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <div class="modal-body">
-         Are you sure you want to delete this post
-        </div>
-        <div class="modal-footer">
-        <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="d-inline">
-              @csrf
-              @method('DELETE')
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Delete</button>
-          </form>
-
-        </div>
-      </div>
-    </div>
-  </div> --}}
         @foreach($posts as $post)
             <tr>
                 <td>{{$post['id']}}</td>
                 <td>{{$post['title']}}</td>
+                <td>@if($post['image'])<img  src="Images/posts/{{$post['image']}}" width="150" height="150">@endif</td>
+                <td>{{$post['slug']}}</td>
                 <td>{{$post['user_id']}}</td>
                 <td>{{\Carbon\Carbon::parse($post->created_at)->format('D-M-Y')}}</td>
                 <td>

@@ -3,7 +3,16 @@
 @section('title') Create @endsection
 
 @section('content')
-    <form action="{{ route('posts.update', $post['id']) }}" method="POST">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+    <form action="{{ route('posts.update', $post['id']) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -25,7 +34,10 @@
                 @endforeach
             </select>
         </div>
-
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" name="image" aria-describedby="fileHelpId">
+          </div>
         <button class="btn btn-success">Update</button>
     </form>
 @endsection
